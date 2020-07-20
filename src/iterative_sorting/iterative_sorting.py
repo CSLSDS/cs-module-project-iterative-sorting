@@ -1,25 +1,43 @@
 # TO-DO: Complete the selection_sort() function below
 def selection_sort(arr):
     # loop through n-1 elements
-    for i in range(0, len(arr) - 1):
-        cur_index = i
-        smallest_index = cur_index
-        # TO-DO: find next smallest element
-        # (hint, can do in 3 loc)
-        # Your code here
-
-
-        # TO-DO: swap
-        # Your code here
+    for i in range(len(arr)):
+        lower_bound = i # lower bound; 'current' position evaluated
+        lowest_ix = lower_bound # assign _lower_ bound of range to the index
+                          #     of our current lowest value element
+        lowest_x = arr[lower_bound] # assign current lowest value to var 
+        # find next smallest element
+        for positioninquestion in range(lower_bound, len(arr)):
+            if arr[positioninquestion] < lowest_x:
+                lowest_x = arr[positioninquestion]
+                lowest_ix = positioninquestion
+            
+        arr[lower_bound], arr[lowest_ix] = arr[lowest_ix], arr[lower_bound]
 
     return arr
 
 
 # TO-DO:  implement the Bubble Sort function below
 def bubble_sort(arr):
-    # Your code here
 
-
+    # for ix, x in enumerate(arr):
+    for x, ix in enumerate(arr):
+        swapped = True
+        while swapped == True:
+            swapped = False
+            for ix in range(len(arr) - 1):
+            # compare arr[ix] to arr[ix + 1]
+            # if curr > next:
+                if arr[ix] > arr[ix+1]:
+            #   swap
+                    arr[ix], arr[ix+1] = arr[ix+1], arr[ix]
+            #   increment ix
+                    ix += 1
+                    swapped = True
+            # else:
+                else:
+            #   increment ix
+                    ix += 1
     return arr
 
 '''
@@ -40,7 +58,36 @@ buckets.
 What is the time and space complexity of the counting sort algorithm?
 '''
 def counting_sort(arr, maximum=None):
-    # Your code here
+    # check empty case
+    if len(arr) == 0:
+        return arr
 
+    # initialize an array of 0s of len(maxval+1)        
+    if maximum is None:
+        maximum = max(arr)
+    # initialize 'bins'
+    count = [0]*(maximum + 1)
+
+    for ix, x in enumerate(arr):
+        if x < 0:
+            return "Error, negative numbers not allowed in Count Sort"
+        else:
+            count[x] += 1 # x not ix bc these are bins not indices/positions
+    
+    # 
+
+    total = 0
+
+    for i in range(maximum+1): # max + 1?
+        # count[i], total = total, (count[i] + total)
+        temp = count[i] + total
+        count[i] = total
+        total = temp
+    
+    output = [0]*len(arr)
+
+    for ix, x in enumerate(arr):
+        output[count[ix]] = x
+        count[ix] += 1
 
     return arr
