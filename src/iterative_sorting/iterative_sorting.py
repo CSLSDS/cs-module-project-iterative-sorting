@@ -57,6 +57,9 @@ buckets.
 
 What is the time and space complexity of the counting sort algorithm?
 '''
+
+# just followed pseudo-code guidelines in wikipedia article on counting sort
+
 def counting_sort(arr, maximum=None):
     # check empty case
     if len(arr) == 0:
@@ -65,29 +68,38 @@ def counting_sort(arr, maximum=None):
     # initialize an array of 0s of len(maxval+1)        
     if maximum is None:
         maximum = max(arr)
+
     # initialize 'bins'
     count = [0]*(maximum + 1)
 
+    # create 'counts' that increment each time we loop over matching values
     for ix, x in enumerate(arr):
         if x < 0:
             return "Error, negative numbers not allowed in Count Sort"
         else:
             count[x] += 1 # x not ix bc these are bins not indices/positions
-    
-    # 
+                          # this keeps confusing me hahaha
 
-    total = 0
-
-    for i in range(maximum+1): # max + 1?
-        # count[i], total = total, (count[i] + total)
-        temp = count[i] + total
-        count[i] = total
-        total = temp
-    
+    # return counts into an output array
+    # position in 'bin' iteration
+    position = 0
+    # initialize output array of same length as input
     output = [0]*len(arr)
 
-    for ix, x in enumerate(arr):
-        output[count[ix]] = x
-        count[ix] += 1
 
-    return arr
+    for i in range(len(count)): # iterate over bins
+
+        # while there is still an element in a bin,
+        while count[i] > 0:
+
+        # add each element one at a time
+
+            # output the bin value i to the next index in output array
+            output[position] = i
+            # increment our position
+            position += 1
+            # decrement the number of elements in the count bin
+            count[i] -= 1
+
+    return output
+
